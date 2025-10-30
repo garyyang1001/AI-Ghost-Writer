@@ -44,6 +44,7 @@ function App() {
   const [article, setArticle] = useState('');
   const [finalPrompt, setFinalPrompt] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [humanizationConfig, setHumanizationConfig] = useState<HumanizationConfig | undefined>(undefined);
 
   const handleLogin = (name: string) => {
     const newUser = { name };
@@ -103,11 +104,12 @@ function App() {
     setAppState('CONTENT_CONFIG');
   };
 
-  const handleStartGeneration = async (profile: StyleProfile, articleType: ArticleType, humanizationConfig?: HumanizationConfig) => {
+  const handleStartGeneration = async (profile: StyleProfile, articleType: ArticleType, humanizationConfigParam?: HumanizationConfig) => {
     setStyleProfile(profile);
+    setHumanizationConfig(humanizationConfigParam);
     setAppState('GENERATING_ARTICLE');
     try {
-      const result = await api.generateArticle(topic, interviews, profile, articleType, humanizationConfig);
+      const result = await api.generateArticle(topic, interviews, profile, articleType, humanizationConfigParam);
       setArticle(result.article);
       setFinalPrompt(result.finalPrompt);
       setAppState('SHOWING_ARTICLE');
@@ -129,6 +131,7 @@ function App() {
     setArticle('');
     setFinalPrompt('');
     setError(null);
+    setHumanizationConfig(undefined);
   };
   
   const handleResetBlueprint = () => {
