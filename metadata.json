@@ -1,0 +1,5 @@
+{
+  "name": "Word Weaver AI",
+  "description": "一個由 AI 驅動的寫作助理，扮演著編輯夥伴的角色。它幫助使用者研究主題、透過訪談獲取獨特觀點，並為各種平台生成量身定制的內容，同時學習使用者的寫作風格。",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Weaver AI | 您的 AI 寫作夥伴</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .font-serif {
+        font-family: 'Lora', serif;
+      }
+      .prose h1, .prose h2, .prose h3 { margin-top: 1.5em; margin-bottom: 0.5em; font-weight: 600; }
+      .prose h1 { font-size: 1.875rem; }
+      .prose h2 { font-size: 1.5rem; }
+      .prose h3 { font-size: 1.25rem; }
+      .prose p { margin-bottom: 1em; line-height: 1.6; }
+      .prose ul, .prose ol { margin-left: 1.5em; margin-bottom: 1em; }
+      .prose li { margin-bottom: 0.5em; }
+      .prose a { color: #4f46e5; text-decoration: none; }
+      .prose a:hover { text-decoration: underline; }
+      .prose code { background-color: #e5e7eb; padding: 0.2em 0.4em; border-radius: 3px; font-size: 0.9em; }
+      .prose pre { background-color: #1f2937; color: #d1d5db; padding: 1em; border-radius: 6px; overflow-x: auto;}
+      .prose blockquote { border-left: 4px solid #d1d5db; padding-left: 1em; color: #6b7280; font-style: italic; }
+      .dark .prose-invert a { color: #818cf8; }
+      .dark .prose-invert code { background-color: #374151; }
+      .dark .prose-invert blockquote { border-left-color: #4b5563; color: #9ca3af;}
+      
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+      .animate-fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
+      .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+      .animate-fade-in-out {
+        animation: fadeIn 0.5s forwards, fadeOut 0.5s 1.5s forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.548.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 dark:bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
