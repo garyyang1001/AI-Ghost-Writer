@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Copy, Download, RefreshCw, HelpCircle, Loader2, Share2, Twitter, Newspaper, Video, FileCode, X, Check } from 'lucide-react';
 import { api } from '../services/api';
-import { RepurposeType, repurposeTypes } from '../types';
+import { RepurposeType, repurposeTypes, HumanizationConfig } from '../types';
+import { defaultHumanizationConfig } from '../services/humanizeService';
 
 interface GeneratedContentProps {
   article: string;
   finalPrompt: string;
+  humanizationConfig?: HumanizationConfig;
   onRestart: () => void;
 }
 
@@ -51,7 +53,7 @@ const PromptModal: React.FC<{ prompt: string; onClose: () => void }> = ({ prompt
 };
 
 
-const GeneratedContent: React.FC<GeneratedContentProps> = ({ article, finalPrompt, onRestart }) => {
+const GeneratedContent: React.FC<GeneratedContentProps> = ({ article, finalPrompt, humanizationConfig, onRestart }) => {
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
   const [currentAnswer, setCurrentAnswer] = useState<string | null>(null);
@@ -97,7 +99,7 @@ const GeneratedContent: React.FC<GeneratedContentProps> = ({ article, finalPromp
     setCurrentAnswer(null);
     setIsLoadingAnswer(true);
     try {
-      const answer = await api.answerFollowUp(article, question);
+      const answer = await api.answerFollowUp(article, question, humanizationConfig || defaultHumanizationConfig);
       setCurrentAnswer(answer);
     } catch (error) {
       console.error("Error answering follow-up question:", error);
@@ -112,7 +114,7 @@ const GeneratedContent: React.FC<GeneratedContentProps> = ({ article, finalPromp
     setSelectedRepurposeType(format);
     setRepurposedContent(null);
     try {
-        const result = await api.repurposeContent(article, format);
+        const result = await api.repurposeContent(article, format, humanizationConfig || defaultHumanizationConfig);
         setRepurposedContent(result);
     } catch (error) {
         console.error("Error repurposing content:", error);

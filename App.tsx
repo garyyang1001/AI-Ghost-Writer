@@ -159,7 +159,7 @@ function App() {
       case 'GENERATING_ARTICLE':
         return <LoadingIndicator title="正在編織您的文章..." messages={['融合您的見解...', '套用寫作風格...', '進行最後潤飾...', '即將完成！']} icon={<FileText className="h-10 w-10 text-indigo-500" />} />;
       case 'SHOWING_ARTICLE':
-        return <GeneratedContent article={article} finalPrompt={finalPrompt} onRestart={handleReset} />;
+        return <GeneratedContent article={article} finalPrompt={finalPrompt} humanizationConfig={humanizationConfig} onRestart={handleReset} />;
       default:
         return <Auth onLogin={handleLogin} />;
     }

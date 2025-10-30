@@ -76,7 +76,7 @@ const ContentConfig: React.FC<ContentConfigProps> = ({ user, topic, initialProfi
     setError(null);
     setStyleSample('');
     try {
-        const sample = await api.generateStyleSample(topic, profile.styleTemplate);
+        const sample = await api.generateStyleSample(topic, profile.styleTemplate, humanizationConfig);
         setStyleSample(sample);
         setView('showing_preview');
     } catch(err) {
