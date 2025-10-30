@@ -150,6 +150,86 @@ const GeneratedContent: React.FC<GeneratedContentProps> = ({ article, finalPromp
                         </button>
                     </div>
                 </div>
+                {/* Humanization Analysis */}
+                {humanizationResult && showHumanizationAnalysis && (
+                    <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                        <HumanizationSettings 
+                            config={{ enabled: true, intensity: 0, logicStyle: 'spiral', verbalTics: [], personalPhrases: [], rhythmPattern: 'varied', emphasisStrategy: 'strategic', removeAIPhrases: true, addOpinions: true, varyParagraphLength: true, useConversationalTone: true }}
+                            onConfigChange={() => {}}
+                            humanityScore={humanizationResult.humanityScore}
+                            showScore={true}
+                        />
+                    </div>
+                )}
+
+                {/* Original vs Humanized Toggle */}
+                {humanizationResult && showOriginal && (
+                    <div className="mb-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg border">
+                                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                                    <FileCode className="h-4 w-4" />
+                                    AI 原始輸出
+                                </h4>
+                                <div className="prose prose-sm max-w-none dark:prose-invert text-gray-600 dark:text-gray-400">
+                                    <ReactMarkdown>{humanizationResult.originalContent}</ReactMarkdown>
+                                </div>
+                            </div>
+                            <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
+                                <h4 className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-3 flex items-center gap-2">
+                                    <Sparkles className="h-4 w-4" />
+                                    人性化後版本
+                                </h4>
+                                <div className="prose prose-sm max-w-none dark:prose-invert">
+                                    <ReactMarkdown>{humanizationResult.humanizedContent}</ReactMarkdown>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Transformation Log */}
+                {humanizationResult && showTransformations && (
+                    <div className="mb-6 p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+                        <h4 className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-3 flex items-center gap-2">
+                            <Zap className="h-4 w-4" />
+                            變化記錄 ({humanizationResult.transformations.length} 項變更)
+                        </h4>
+                        <div className="space-y-2 max-h-60 overflow-y-auto">
+                            {humanizationResult.transformations.map((transform, idx) => (
+                                <div key={idx} className="bg-white dark:bg-gray-800 p-3 rounded border border-orange-200 dark:border-orange-700">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <span className={`px-2 py-1 text-xs rounded-full ${
+                                            transform.type === 'phrase_removal' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300' :
+                                            transform.type === 'phrase_injection' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' :
+                                            transform.type === 'structure_change' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' :
+                                            transform.type === 'emphasis_added' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' :
+                                            'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300'
+                                        }`}>
+                                            {transform.type === 'phrase_removal' && '移除用語'}
+                                            {transform.type === 'phrase_injection' && '添加用語'}
+                                            {transform.type === 'structure_change' && '結構調整'}
+                                            {transform.type === 'emphasis_added' && '強調標記'}
+                                            {transform.type === 'opinion_added' && '添加觀點'}
+                                        </span>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                                        <div>
+                                            <p className="text-gray-500 dark:text-gray-400 mb-1">原文：</p>
+                                            <p className="bg-gray-100 dark:bg-gray-700 p-2 rounded">{transform.original}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-gray-500 dark:text-gray-400 mb-1">變更後：</p>
+                                            <p className="bg-orange-100 dark:bg-orange-900/30 p-2 rounded">{transform.transformed}</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-2 italic">{transform.reason}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
                 <article className="prose dark:prose-invert max-w-none prose-indigo">
                 <ReactMarkdown>{article}</ReactMarkdown>
                 </article>

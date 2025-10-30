@@ -45,6 +45,63 @@ export interface PredefinedStyle {
   category: string;
 }
 
+// Humanization Types
+export type LogicStyle = 'linear' | 'spiral' | 'conversational' | 'storytelling';
+export type RhythmPattern = 'uniform' | 'varied' | 'staccato' | 'flowing';
+export type EmphasisStrategy = 'minimal' | 'strategic' | 'emotional';
+export type EmotionalTone = 'passionate' | 'analytical' | 'humorous' | 'conversational';
+
+export interface HumanizationConfig {
+  enabled: boolean;
+  intensity: number; // 0-100
+  logicStyle: LogicStyle;
+  verbalTics: string[];
+  personalPhrases: string[];
+  rhythmPattern: RhythmPattern;
+  emphasisStrategy: EmphasisStrategy;
+  removeAIPhrases: boolean;
+  addOpinions: boolean;
+  varyParagraphLength: boolean;
+  useConversationalTone: boolean;
+}
+
+export interface TransformationLog {
+  type: 'phrase_removal' | 'phrase_injection' | 'structure_change' | 'emphasis_added' | 'opinion_added';
+  original: string;
+  transformed: string;
+  reason: string;
+}
+
+export interface HumanizationResult {
+  originalContent: string;
+  humanizedContent: string;
+  transformations: TransformationLog[];
+  humanityScore: HumanityScore;
+}
+
+export interface HumanityScore {
+  overall: number;
+  breakdown: {
+    logicVariance: number;
+    vocabularyNaturalness: number;
+    rhythmVariation: number;
+    emotionalContent: number;
+    personalityStrength: number;
+  };
+  suggestions: string[];
+}
+
+export interface EnhancedStyleProfile extends StyleProfile {
+  humanization: {
+    aiPhrasesToAvoid: string[];
+    preferredPhrases: string[];
+    paragraphRhythm: RhythmPattern;
+    opinionFrequency: 'high' | 'medium' | 'low';
+    tangentProbability: number;
+    emotionalTone: EmotionalTone;
+  };
+}
+
 export const predefinedStyles: PredefinedStyle[] = [
   // Category: 文學與作家風格
   { 

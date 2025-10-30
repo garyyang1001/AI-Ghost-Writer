@@ -4,6 +4,7 @@ import {
   recommendAndSampleStyles,
   generateStyleSample,
   generateArticle,
+  generateHumanizedArticle,
   repurposeContent,
   getFollowUpQuestions,
   answerFollowUp
@@ -19,6 +20,11 @@ export const api = {
    * @returns An object containing the generated article and the final prompt used.
    */
   generateArticle,
+  /**
+   * Generates an article with humanization and returns detailed transformation data.
+   * @returns An object containing the article, prompt, and humanization analysis.
+   */
+  generateHumanizedArticle,
   repurposeContent,
   getFollowUpQuestions,
   answerFollowUp

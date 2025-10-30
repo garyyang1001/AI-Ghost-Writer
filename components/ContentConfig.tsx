@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { StyleProfile, ArticleType, articleTypes, RecommendedStyle, User, predefinedStyles, PredefinedStyle } from '../types';
+import { StyleProfile, ArticleType, articleTypes, RecommendedStyle, User, predefinedStyles, PredefinedStyle, HumanizationConfig } from '../types';
 import { Settings, Sparkles, Wand2, Loader2, BookText, ArrowLeft, RefreshCw, CheckCircle } from 'lucide-react';
 import { api } from '../services/api';
+import HumanizationSettings from './HumanizationSettings';
+import { defaultHumanizationConfig } from '../services/humanizeService';
 
 interface ContentConfigProps {
   user: User | null;
   topic: string;
   initialProfile: StyleProfile;
-  onStartGeneration: (profile: StyleProfile, articleType: ArticleType) => void;
+  onStartGeneration: (profile: StyleProfile, articleType: ArticleType, humanizationConfig?: HumanizationConfig) => void;
 }
 
 type ViewState = 'config' | 'recommend_input' | 'loading_recommendations' | 'showing_recommendations' | 'loading_preview' | 'showing_preview';
@@ -16,6 +18,7 @@ const ContentConfig: React.FC<ContentConfigProps> = ({ user, topic, initialProfi
   const [profile, setProfile] = useState<StyleProfile>(initialProfile);
   const [articleType, setArticleType] = useState<ArticleType>('部落格文章');
   const [newInstruction, setNewInstruction] = useState('');
+  const [humanizationConfig, setHumanizationConfig] = useState<HumanizationConfig>(defaultHumanizationConfig);
   
   const [view, setView] = useState<ViewState>('config');
   const [styleDescription, setStyleDescription] = useState('');
@@ -83,7 +86,7 @@ const ContentConfig: React.FC<ContentConfigProps> = ({ user, topic, initialProfi
   };
 
   const handleFinalSubmit = () => {
-    onStartGeneration(profile, articleType);
+    onStartGeneration(profile, articleType, humanizationConfig);
   };
 
   const groupedStyles = predefinedStyles.reduce((acc, style) => {
@@ -235,8 +238,19 @@ const ContentConfig: React.FC<ContentConfigProps> = ({ user, topic, initialProfi
             </div>
         )}
 
+        {/* Humanization Settings */}
         <div>
-            <label className="text-lg font-semibold text-gray-800 dark:text-gray-200">3. 新增額外指示 (選填)</label>
+          <label className="text-lg font-semibold text-gray-800 dark:text-gray-200">3. 去除 AI 味設定</label>
+          <div className="mt-3">
+            <HumanizationSettings 
+              config={humanizationConfig}
+              onConfigChange={setHumanizationConfig}
+            />
+          </div>
+        </div>
+
+        <div>
+            <label className="text-lg font-semibold text-gray-800 dark:text-gray-200">4. 新增額外指示 (選填)</label>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">例如：「多使用條列式清單」、「引用名人名言」。</p>
             <div className="mt-3 flex gap-3">
                 <input

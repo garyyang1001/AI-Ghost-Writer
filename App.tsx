@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
-import { User, ContentBlueprintData, Interview, StyleProfile, ArticleType, ChatMessage } from './types';
+import { User, ContentBlueprintData, Interview, StyleProfile, ArticleType, ChatMessage, HumanizationConfig } from './types';
 import { api } from './services/api';
 
 import Auth from './components/Auth';
@@ -103,11 +103,11 @@ function App() {
     setAppState('CONTENT_CONFIG');
   };
 
-  const handleStartGeneration = async (profile: StyleProfile, articleType: ArticleType) => {
+  const handleStartGeneration = async (profile: StyleProfile, articleType: ArticleType, humanizationConfig?: HumanizationConfig) => {
     setStyleProfile(profile);
     setAppState('GENERATING_ARTICLE');
     try {
-      const result = await api.generateArticle(topic, interviews, profile, articleType);
+      const result = await api.generateArticle(topic, interviews, profile, articleType, humanizationConfig);
       setArticle(result.article);
       setFinalPrompt(result.finalPrompt);
       setAppState('SHOWING_ARTICLE');

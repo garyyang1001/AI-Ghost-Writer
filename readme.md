@@ -52,6 +52,62 @@
 
 *   在除了最終文章頁面外的所有流程中，右下角都有一個常駐的聊天機器人。使用者可以隨時向它提問關於應用程式功能或寫作流程的問題。
 
+## 快速開始
+
+### 1. 安裝依賴
+
+```bash
+npm install
+```
+
+### 2. 設定 API Key
+
+1. 複製環境變數範本檔案：
+   ```bash
+   cp .env.example .env
+   ```
+
+2. 取得 Google Gemini API Key：
+   - 前往 [Google AI Studio](https://ai.google.dev/)
+   - 建立新的 API Key
+   - 複製您的 API Key
+
+3. 編輯 `.env` 檔案，填入您的 API Key：
+   ```env
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+
+4. 測試 API Key 配置：
+   ```bash
+   npm run test:api
+   ```
+
+### 3. 啟動開發伺服器
+
+```bash
+npm run dev
+```
+
+應用程式將在 http://localhost:3000 啟動。
+
+### 4. 建置專案
+
+```bash
+npm run build
+```
+
+## 📦 部署
+
+本專案支援多種雲端平台部署，包括 Vercel、Zeabur、Netlify 等。
+
+詳細的部署指南請參考：[DEPLOYMENT.md](./DEPLOYMENT.md)
+
+### 快速部署
+- [部署到 Vercel](https://vercel.com/new/clone?repository-url=https://github.com/your-username/your-repo)
+- [部署到 Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/your-username/your-repo)
+
+> **重要**: 部署前請確保在雲端平台設定 `GEMINI_API_KEY` 環境變數
+
 ## 技術棧
 
 *   **前端框架**：React + TypeScript
@@ -59,3 +115,4 @@
 *   **AI 模型**：Google Gemini API (`gemini-2.5-flash`)
 *   **狀態管理**：React Hooks (`useState`, `useEffect`)
 *   **資料持久化**：瀏覽器 Local Storage
+*   **去除 AI 味系統**：自研的人性化寫作優化引擎
